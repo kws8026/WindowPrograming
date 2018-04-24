@@ -57,16 +57,16 @@ void CChildView::OnPaint()
 	bitmap.CreateCompatibleBitmap(&dc, rect.Width(), rect.Height());
 	memDC.SelectObject(&bitmap);
 	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
-	
+	int c = 0;
 	for(int i = m_pos.x -127 ; i < m_pos.x+ 127 ; i++)
 	{
-		int c = i % 256;
 		for (int j = m_pos.y -127; j <  m_pos.y+127; j++)
 		{
 			if ((i - m_pos.x)*(i - m_pos.x) + (j - m_pos.y) * (j - m_pos.y) < 127 * 127)
 				//memDC.SetPixel();
 				memDC.SetPixelV(i, j, RGB(c, 0, 255 - c));
 		}
+		c++;
 	}
 	dc.BitBlt(0, 0, rect.Width() , rect.Height(), &memDC, 0, 0, SRCCOPY);
 
