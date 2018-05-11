@@ -110,6 +110,7 @@ void CChildView::OnMouseMove(UINT nFlags, CPoint point)
 	if (nFlags == MK_LBUTTON)
 	{
 		if(Eraser) Eraser = false;
+		if (Animation) Animation = false;
 		CShape shape(BrushSize,m_brush,point,m_color);
 		ShapeList.AddTail(shape);
 		Invalidate();
