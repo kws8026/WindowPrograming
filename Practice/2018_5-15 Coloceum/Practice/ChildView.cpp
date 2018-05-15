@@ -13,7 +13,7 @@
 
 // CChildView
 
-CChildView::CChildView() :p_Point(1000,500)
+CChildView::CChildView() :CamPos(1000,500)
 {
 }
 

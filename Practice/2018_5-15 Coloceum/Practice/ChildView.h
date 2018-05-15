@@ -4,6 +4,7 @@
 
 
 #pragma once
+#include "UnitManiger.h"
 #include "Player.h"
 
 // CChildView 창
@@ -15,8 +16,9 @@ public:
 	CChildView();
 
 // 특성입니다.
-public:
+private:
 	CPoint CamPos;
+	CUnitManiger UM;
 // 작업입니다.
 public:
 
