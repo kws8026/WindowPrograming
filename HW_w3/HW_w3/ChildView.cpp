@@ -238,7 +238,7 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	SetTimer(0, 100, NULL);
+	SetTimer(0, 50, NULL);
 	// TODO:  여기에 특수화된 작성 코드를 추가합니다.
 
 	return 0;
