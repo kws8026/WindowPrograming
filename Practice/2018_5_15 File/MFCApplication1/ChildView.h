@@ -17,6 +17,8 @@ public:
 // 특성입니다.
 public:
 	CArray<CPoint, CPoint> ArrPoint;
+	CArray<COLORREF, COLORREF> ArrColor;
+	COLORREF m_Color;
 // 작업입니다.
 public:
 
@@ -37,5 +39,6 @@ public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void Save();
 	afx_msg void Load();
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 };
 

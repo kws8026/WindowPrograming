@@ -5,8 +5,8 @@
 #define IDD_ABOUTBOX                    100
 #define IDR_MAINFRAME                   128
 #define IDR_MFCApplication1TYPE         130
-#define ID_SAVE                        150
-#define ID_LOAD                        151
+#define ID_SAVE                         150
+#define ID_LOAD                         151
 
 // Next default values for new objects
 // 
