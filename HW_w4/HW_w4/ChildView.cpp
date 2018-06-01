@@ -1,5 +1,5 @@
-
-// ChildView.cpp : CChildView Å¬·¡½ºÀÇ ±¸Çö
+ï»¿
+// ChildView.cpp : CChildView í´ë˜ìŠ¤ì˜ êµ¬í˜„
 //
 
 #include "stdafx.h"
@@ -14,7 +14,7 @@
 
 // CChildView
 
-CChildView::CChildView() : played(false), Count(0)
+CChildView::CChildView() : played(false), Count(0), tick(-1)
 {
 }
 
@@ -34,12 +34,11 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_BN_CLICKED(133, Load)
 	ON_BN_CLICKED(134, Play)
 	ON_BN_CLICKED(135, EndPlay)
-
 END_MESSAGE_MAP()
 
 
 
-// CChildView ¸Ş½ÃÁö Ã³¸®±â
+// CChildView ë©”ì‹œì§€ ì²˜ë¦¬ê¸°
 
 BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs) 
 {
@@ -56,11 +55,11 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 
 void CChildView::OnPaint() 
 {
-	CPaintDC dc(this); // ±×¸®±â¸¦ À§ÇÑ µğ¹ÙÀÌ½º ÄÁÅØ½ºÆ®ÀÔ´Ï´Ù.
+	CPaintDC dc(this); // ê·¸ë¦¬ê¸°ë¥¼ ìœ„í•œ ë””ë°”ì´ìŠ¤ ì»¨í…ìŠ¤íŠ¸ì…ë‹ˆë‹¤.
 	
-	// TODO: ¿©±â¿¡ ¸Ş½ÃÁö Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ë©”ì‹œì§€ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 	
-	// ±×¸®±â ¸Ş½ÃÁö¿¡ ´ëÇØ¼­´Â CWnd::OnPaint()¸¦ È£ÃâÇÏÁö ¸¶½Ê½Ã¿À.
+	// ê·¸ë¦¬ê¸° ë©”ì‹œì§€ì— ëŒ€í•´ì„œëŠ” CWnd::OnPaint()ë¥¼ í˜¸ì¶œí•˜ì§€ ë§ˆì‹­ì‹œì˜¤.
 	CDC memDC;
 	CRect rect;
 	GetClientRect(rect);
@@ -69,7 +68,7 @@ void CChildView::OnPaint()
 	bitmap.CreateCompatibleBitmap(&dc, rect.Width(), rect.Height());
 	memDC.SelectObject(bitmap);
 	memDC.FillRect(rect,WHITE_BRUSH);
-	// ¼±±×¸®±â
+	// ì„ ê·¸ë¦¬ê¸°
 	if(!(arrPawn.IsEmpty()))memDC.MoveTo(arrPawn[0].getPos());
 	for (int i = 1; i < arrPawn.GetCount(); i++) {
 		CPen pen;
@@ -79,8 +78,11 @@ void CChildView::OnPaint()
 		}
 		memDC.LineTo(arrPawn[i].getPos());
 	}
-	// »ç°¢Çü ¹× ¿ø ±×¸®±â
+	// ì‚¬ê°í˜• ë° ì› ê·¸ë¦¬ê¸°
 	if (played){
+		CPen pen;
+		pen.CreatePen(PS_SOLID, 1, RGB(0, 0, 0));
+		memDC.SelectObject(&pen);
 		memDC.Rectangle(pos.x - 20, pos.y - 20, pos.x + 20, pos.y + 20);
 	}
 	else {
@@ -113,8 +115,8 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		button[i].Create(str[i], BS_PUSHBUTTON | WS_VISIBLE, CRect(i * 50, 0, (i * 50) + 50, 30), this, 131 + i);
 	}
 	scroll.Create(SBS_HORZ | WS_VISIBLE, CRect(250, 0, 800, 30), this, 136);
-	SetTimer(0, 300, NULL);
-	// TODO:  ¿©±â¿¡ Æ¯¼öÈ­µÈ ÀÛ¼º ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+	SetTimer(0, 33, NULL);
+	// TODO:  ì—¬ê¸°ì— íŠ¹ìˆ˜í™”ëœ ì‘ì„± ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 	
 	return 0;
 }
@@ -122,7 +124,7 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CChildView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	// TODO: ¿©±â¿¡ ¸Ş½ÃÁö Ã³¸®±â ÄÚµå¸¦ Ãß°¡ ¹×/¶Ç´Â ±âº»°ªÀ» È£ÃâÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ë©”ì‹œì§€ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€ ë°/ë˜ëŠ” ê¸°ë³¸ê°’ì„ í˜¸ì¶œí•©ë‹ˆë‹¤.
 	if (played || point.y < 30) return;
 	arrPawn.Add(point);
 	Invalidate();
@@ -136,9 +138,24 @@ void CChildView::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CChildView::OnTimer(UINT_PTR nIDEvent)
 {
-	// TODO: ¿©±â¿¡ ¸Ş½ÃÁö Ã³¸®±â ÄÚµå¸¦ Ãß°¡ ¹×/¶Ç´Â ±âº»°ªÀ» È£ÃâÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ë©”ì‹œì§€ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€ ë°/ë˜ëŠ” ê¸°ë³¸ê°’ì„ í˜¸ì¶œí•©ë‹ˆë‹¤.
 	if (nIDEvent == 0 && played == true)
 	{
+		if (tick == 50 || tick == -1) {
+			if (!(Count < arrPawn.GetCount() - 1)) {
+				EndPlay();	return;
+			}
+			SetVelocity(pos, arrPawn[++Count].getPos());
+			scroll.SetScrollPos(Count);
+			tick = 0;
+		}
+		// ì•¼ë§¤ ë³´ì •
+		posF[0] += velocity[0];
+		posF[1] += velocity[1];
+		pos.x = posF[0];
+		pos.y = posF[1];
+		tick++;
+		Invalidate();
 	}
 	CWnd::OnTimer(nIDEvent);
 }
@@ -146,8 +163,8 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 
 void CChildView::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
-	// TODO: ¿©±â¿¡ ¸Ş½ÃÁö Ã³¸®±â ÄÚµå¸¦ Ãß°¡ ¹×/¶Ç´Â ±âº»°ªÀ» È£ÃâÇÕ´Ï´Ù.
-	if (nSBCode != NULL)
+	// TODO: ì—¬ê¸°ì— ë©”ì‹œì§€ ì²˜ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€ ë°/ë˜ëŠ” ê¸°ë³¸ê°’ì„ í˜¸ì¶œí•©ë‹ˆë‹¤.
+	if (nSBCode != NULL && played == false)
 	{
 		switch (nSBCode)
 		{
@@ -179,7 +196,7 @@ void CChildView::Clear()
 {
 	arrPawn.RemoveAll();
 	Invalidate();
-	AfxMessageBox(_T("Á¤¸®µÇ¾ú½À´Ï´Ù."));
+	AfxMessageBox(_T("ì •ë¦¬ë˜ì—ˆìŠµë‹ˆë‹¤."));
 }
 
 void CChildView::Save()
@@ -190,7 +207,7 @@ void CChildView::Save()
 		e.ReportError();
 	CArchive ar(&file, CArchive::store);
 	arrPawn.Serialize(ar);
-	AfxMessageBox(_T("ÀúÀåµÇ¾ú½À´Ï´Ù."));
+	AfxMessageBox(_T("ì €ì¥ë˜ì—ˆìŠµë‹ˆë‹¤."));
 }
 
 void CChildView::Load()
@@ -208,13 +225,19 @@ void CChildView::Load()
 	Count = num;
 
 	Invalidate();
-	AfxMessageBox(_T("ºÒ·¯¿Ô½À´Ï´Ù."));
+	AfxMessageBox(_T("ë¶ˆëŸ¬ì™”ìŠµë‹ˆë‹¤."));
 }
 
 void CChildView::Play()
 {
+	if (arrPawn.IsEmpty())	return;
 	played = true;
 	Count = 0;
+	scroll.SetScrollPos(Count);
+	pos = arrPawn[0].getPos();
+	posF[0] = pos.x;
+	posF[1] = pos.y;
+	tick = -1;
 	Invalidate();
 }
 
@@ -223,4 +246,10 @@ void CChildView::EndPlay()
 	played = false;
 	Count = arrPawn.GetCount() - 1;
 	Invalidate();
+}
+
+void CChildView::SetVelocity(const CPoint& start,const  CPoint& target)
+{
+	velocity[0] = (target.x - start.x) / 50.0f;
+	velocity[1] = (target.y - start.y) / 50.0f;
 }

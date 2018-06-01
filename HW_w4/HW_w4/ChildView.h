@@ -1,40 +1,43 @@
-
-// ChildView.h : CChildView Å¬·¡½ºÀÇ ÀÎÅÍÆäÀÌ½º
+ï»¿
+// ChildView.h : CChildView í´ë˜ìŠ¤ì˜ ì¸í„°í˜ì´ìŠ¤
 //
 
 
 #pragma once
 #include "Pawn.h"
 
-// CChildView Ã¢
+// CChildView ì°½
 
 class CChildView : public CWnd
 {
-// »ı¼ºÀÔ´Ï´Ù.
+// ìƒì„±ì…ë‹ˆë‹¤.
 public:
 	CChildView();
 
-// Æ¯¼ºÀÔ´Ï´Ù.
+// íŠ¹ì„±ì…ë‹ˆë‹¤.
 public:
 	CButton button[5];
 	CScrollBar scroll;
 private:
 	bool played;
 	CPoint pos;
+	float posF[2];
+	float velocity[2];
+	int tick;
 	CArray<CPawn, CPawn> arrPawn;
 	int Count;
-// ÀÛ¾÷ÀÔ´Ï´Ù.
+// ì‘ì—…ì…ë‹ˆë‹¤.
 public:
-
-// ÀçÁ¤ÀÇÀÔ´Ï´Ù.
+	void SetVelocity(const CPoint& start, const  CPoint& target);
+// ì¬ì •ì˜ì…ë‹ˆë‹¤.
 	protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
-// ±¸ÇöÀÔ´Ï´Ù.
+// êµ¬í˜„ì…ë‹ˆë‹¤.
 public:
 	virtual ~CChildView();
 
-	// »ı¼ºµÈ ¸Ş½ÃÁö ¸Ê ÇÔ¼ö
+	// ìƒì„±ëœ ë©”ì‹œì§€ ë§µ í•¨ìˆ˜
 protected:
 	afx_msg void OnPaint();
 	DECLARE_MESSAGE_MAP()
@@ -48,6 +51,4 @@ public:
 	afx_msg void Load();
 	afx_msg void Play();
 	afx_msg void EndPlay();
-
 };
-
