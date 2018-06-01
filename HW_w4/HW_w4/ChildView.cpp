@@ -14,7 +14,7 @@
 
 // CChildView
 
-CChildView::CChildView() : played(false), Count(0), tick(-1)
+CChildView::CChildView() : played(false), Count(0), tick(-1), flag(0)
 {
 }
 
@@ -34,6 +34,8 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_BN_CLICKED(133, Load)
 	ON_BN_CLICKED(134, Play)
 	ON_BN_CLICKED(135, EndPlay)
+	ON_WM_ERASEBKGND()
+	ON_WM_RBUTTONDOWN()
 END_MESSAGE_MAP()
 
 
@@ -83,20 +85,52 @@ void CChildView::OnPaint()
 		CPen pen;
 		pen.CreatePen(PS_SOLID, 1, RGB(0, 0, 0));
 		memDC.SelectObject(&pen);
-		memDC.Rectangle(pos.x - 20, pos.y - 20, pos.x + 20, pos.y + 20);
+		//memDC.Rectangle(pos.x - 20, pos.y - 20, pos.x + 20, pos.y + 20);
+		if(flag == -1){
+		CPoint p[8];
+		p[0] = { pos.x - 20 + tick/2, pos.y - 20 + tick / 2 };
+		p[1] = { pos.x, pos.y - 20 }; // 위
+		p[2] = { pos.x + 20 - tick / 2, pos.y - 20 + tick / 2 };
+		p[3] = { pos.x + 20, pos.y }; // 오른
+		p[4] = { pos.x + 20 - tick / 2, pos.y + 20 - tick / 2 };
+		p[5] = { pos.x , pos.y + 20 }; // 아래
+		p[6] = { pos.x - 20 + tick / 2, pos.y + 20 - tick / 2 };
+		p[7] = { pos.x - 20, pos.y}; // 왼
+		if (tick < 10)
+			memDC.Polygon(p,8);
+		else 
+			memDC.Ellipse(pos.x - 20, pos.y - 20, pos.x + 20, pos.y + 20);
+		}
+		else if (flag == 1) {
+			CPoint p[8];
+			p[0] = { pos.x - 15 - tick / 2, pos.y - 15 - tick / 2 };
+			p[1] = { pos.x, pos.y - 20 }; // 위
+			p[2] = { pos.x + 15 + tick / 2, pos.y - 15 - tick / 2 };
+			p[3] = { pos.x + 20, pos.y }; // 오른
+			p[4] = { pos.x + 15 + tick / 2, pos.y + 15 + tick / 2 };
+			p[5] = { pos.x , pos.y + 20 }; // 아래
+			p[6] = { pos.x - 15 - tick / 2, pos.y + 15 + tick / 2 };
+			p[7] = { pos.x - 20, pos.y }; // 왼
+			memDC.Polygon(p, 8);
+		}
+		else if(arrPawn[Count].getIsCircle())
+			memDC.Ellipse(pos.x - 20, pos.y - 20, pos.x + 20, pos.y + 20);
+		else if (!(arrPawn[Count].getIsCircle()))
+			memDC.Rectangle(pos.x - 20, pos.y - 20, pos.x + 20, pos.y + 20);
 	}
 	else {
 		for (int i = 0; i < arrPawn.GetCount(); i++) {
 			CPen pen(PS_SOLID, 1, RGB(0,0,0));
 			if (i == Count) {
 				pen.DeleteObject();
-				pen.CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
+				pen.CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
 			}
 			memDC.SelectObject(&pen);
 			arrPawn[i].Draw(memDC);
 		}
 	}
-	dc.BitBlt(0,0,rect.Width(),rect.Height(),&memDC,0,0,SRCCOPY);
+	dc.BitBlt(0,30,rect.Width(),rect.Height(),&memDC,0,30,SRCCOPY);
+	dc.BitBlt(800, 0, rect.Width(), 30, &memDC, 800, 0, SRCCOPY);
 }
 
 
@@ -115,10 +149,24 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		button[i].Create(str[i], BS_PUSHBUTTON | WS_VISIBLE, CRect(i * 50, 0, (i * 50) + 50, 30), this, 131 + i);
 	}
 	scroll.Create(SBS_HORZ | WS_VISIBLE, CRect(250, 0, 800, 30), this, 136);
-	SetTimer(0, 33, NULL);
+	SetTimer(0, 50, NULL);
 	// TODO:  여기에 특수화된 작성 코드를 추가합니다.
 	
 	return 0;
+}
+
+void CChildView::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	if (played || point.y < 30) return;
+	CPawn p(point, true);
+	arrPawn.Add(p);
+	Invalidate();
+	int num = arrPawn.GetCount() - 1;
+	scroll.SetScrollRange(0, num);
+	scroll.SetScrollPos(num);
+	Count = num;
+	CWnd::OnRButtonDown(nFlags, point);
 }
 
 
@@ -141,12 +189,21 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	if (nIDEvent == 0 && played == true)
 	{
-		if (tick == 50 || tick == -1) {
+		if (tick == 10 || tick == -1) {
 			if (!(Count < arrPawn.GetCount() - 1)) {
-				EndPlay();	return;
+				scroll.SetScrollPos(Count); 
+				Sleep(1000);
+				Play();
+				return;
 			}
+			if (arrPawn[Count].getIsCircle() && !(arrPawn[Count+1].getIsCircle()))
+				flag = 1;
+			else if (!(arrPawn[Count].getIsCircle()) && arrPawn[Count+1].getIsCircle())
+				flag = -1;
+			else
+				flag = 0;
 			SetVelocity(pos, arrPawn[++Count].getPos());
-			scroll.SetScrollPos(Count);
+			scroll.SetScrollPos(Count-1);
 			tick = 0;
 		}
 		// 야매 보정
@@ -168,20 +225,22 @@ void CChildView::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	{
 		switch (nSBCode)
 		{
-			case SB_THUMBPOSITION:
-			case SB_THUMBTRACK:
-				pScrollBar->SetScrollPos(nPos);
-				Count = nPos;
+			case SB_LINELEFT:
+			case SB_PAGELEFT:
+				if (Count > 0)
+				pScrollBar->SetScrollPos(--Count);
 				Invalidate();
 				break;
 			case SB_LINERIGHT:
+			case SB_PAGERIGHT:
 				if (Count < arrPawn.GetCount()-1)
 					pScrollBar->SetScrollPos(++Count);
 				Invalidate();
 				break;
-			case SB_LINELEFT:
-				if (Count > 0)
-					pScrollBar->SetScrollPos(--Count);
+			case SB_THUMBPOSITION:
+			case SB_THUMBTRACK:
+				pScrollBar->SetScrollPos(nPos);
+				Count = nPos;
 				Invalidate();
 				break;
 		default:
@@ -194,6 +253,7 @@ void CChildView::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 void CChildView::Clear()
 {
+	if (played) return;
 	arrPawn.RemoveAll();
 	Invalidate();
 	AfxMessageBox(_T("정리되었습니다."));
@@ -214,8 +274,9 @@ void CChildView::Load()
 {
 	CFile file;
 	CFileException e;
-	if (!file.Open(_T("SaveData.dat"), CFile::modeRead, &e))
-		e.ReportError();
+	if (!file.Open(_T("SaveData.dat"), CFile::modeRead, &e)){
+		e.ReportError(); return;
+	}
 	CArchive ar(&file, CArchive::load);
 	arrPawn.Serialize(ar);
 
@@ -238,6 +299,7 @@ void CChildView::Play()
 	posF[0] = pos.x;
 	posF[1] = pos.y;
 	tick = -1;
+	button[3].SetState(true);
 	Invalidate();
 }
 
@@ -245,11 +307,19 @@ void CChildView::EndPlay()
 {
 	played = false;
 	Count = arrPawn.GetCount() - 1;
+	button[3].SetState(false);
 	Invalidate();
 }
 
 void CChildView::SetVelocity(const CPoint& start,const  CPoint& target)
 {
-	velocity[0] = (target.x - start.x) / 50.0f;
-	velocity[1] = (target.y - start.y) / 50.0f;
+	velocity[0] = (target.x - start.x) / 10.0f;
+	velocity[1] = (target.y - start.y) / 10.0f;
+}
+
+BOOL CChildView::OnEraseBkgnd(CDC* pDC)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	return true;
 }

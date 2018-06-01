@@ -26,6 +26,7 @@ private:
 	int tick;
 	CArray<CPawn, CPawn> arrPawn;
 	int Count;
+	int flag;
 // 작업입니다.
 public:
 	void SetVelocity(const CPoint& start, const  CPoint& target);
@@ -51,4 +52,6 @@ public:
 	afx_msg void Load();
 	afx_msg void Play();
 	afx_msg void EndPlay();
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 };
