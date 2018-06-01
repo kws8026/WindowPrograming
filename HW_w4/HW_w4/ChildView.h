@@ -20,7 +20,6 @@ public:
 	CScrollBar scroll;
 private:
 	bool played;
-	CPoint pos;
 	float posF[2];
 	float velocity[2];
 	int tick;

@@ -85,38 +85,38 @@ void CChildView::OnPaint()
 		CPen pen;
 		pen.CreatePen(PS_SOLID, 1, RGB(0, 0, 0));
 		memDC.SelectObject(&pen);
-		//memDC.Rectangle(pos.x - 20, pos.y - 20, pos.x + 20, pos.y + 20);
+		CPoint tempP(posF[0], posF[1]);
 		if(flag == -1){
 		CPoint p[8];
-		p[0] = { pos.x - 20 + tick/2, pos.y - 20 + tick / 2 };
-		p[1] = { pos.x, pos.y - 20 }; // 위
-		p[2] = { pos.x + 20 - tick / 2, pos.y - 20 + tick / 2 };
-		p[3] = { pos.x + 20, pos.y }; // 오른
-		p[4] = { pos.x + 20 - tick / 2, pos.y + 20 - tick / 2 };
-		p[5] = { pos.x , pos.y + 20 }; // 아래
-		p[6] = { pos.x - 20 + tick / 2, pos.y + 20 - tick / 2 };
-		p[7] = { pos.x - 20, pos.y}; // 왼
+		p[0] = { tempP.x - 20 + tick / 4, tempP.y - 20 + tick / 4 };
+		p[1] = { tempP.x, tempP.y - 20 }; // 위
+		p[2] = { tempP.x + 20 - tick / 4, tempP.y - 20 + tick / 4 };
+		p[3] = { tempP.x + 20, tempP.y }; // 오른
+		p[4] = { tempP.x + 20 - tick / 4, tempP.y + 20 - tick / 4 };
+		p[5] = { tempP.x , tempP.y + 20 }; // 아래
+		p[6] = { tempP.x - 20 + tick / 4, tempP.y + 20 - tick / 4 };
+		p[7] = { tempP.x - 20, tempP.y}; // 왼
 		if (tick < 10)
 			memDC.Polygon(p,8);
 		else 
-			memDC.Ellipse(pos.x - 20, pos.y - 20, pos.x + 20, pos.y + 20);
+			memDC.Ellipse(tempP.x - 20, tempP.y - 20, tempP.x + 20, tempP.y + 20);
 		}
 		else if (flag == 1) {
 			CPoint p[8];
-			p[0] = { pos.x - 15 - tick / 2, pos.y - 15 - tick / 2 };
-			p[1] = { pos.x, pos.y - 20 }; // 위
-			p[2] = { pos.x + 15 + tick / 2, pos.y - 15 - tick / 2 };
-			p[3] = { pos.x + 20, pos.y }; // 오른
-			p[4] = { pos.x + 15 + tick / 2, pos.y + 15 + tick / 2 };
-			p[5] = { pos.x , pos.y + 20 }; // 아래
-			p[6] = { pos.x - 15 - tick / 2, pos.y + 15 + tick / 2 };
-			p[7] = { pos.x - 20, pos.y }; // 왼
+			p[0] = { tempP.x - 15 - tick / 4, tempP.y - 15 - tick / 4 };
+			p[1] = { tempP.x, tempP.y - 20 }; // 위
+			p[2] = { tempP.x + 15 + tick / 4, tempP.y - 15 - tick / 4 };
+			p[3] = { tempP.x + 20, tempP.y }; // 오른
+			p[4] = { tempP.x + 15 + tick / 4, tempP.y + 15 + tick / 4 };
+			p[5] = { tempP.x , tempP.y + 20 }; // 아래
+			p[6] = { tempP.x - 15 - tick / 4, tempP.y + 15 + tick / 4 };
+			p[7] = { tempP.x - 20, tempP.y }; // 왼
 			memDC.Polygon(p, 8);
 		}
 		else if(arrPawn[Count].getIsCircle())
-			memDC.Ellipse(pos.x - 20, pos.y - 20, pos.x + 20, pos.y + 20);
+			memDC.Ellipse(tempP.x - 20, tempP.y - 20, tempP.x + 20, tempP.y + 20);
 		else if (!(arrPawn[Count].getIsCircle()))
-			memDC.Rectangle(pos.x - 20, pos.y - 20, pos.x + 20, pos.y + 20);
+			memDC.Rectangle(tempP.x - 20, tempP.y - 20, tempP.x + 20, tempP.y + 20);
 	}
 	else {
 		for (int i = 0; i < arrPawn.GetCount(); i++) {
@@ -189,7 +189,7 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	if (nIDEvent == 0 && played == true)
 	{
-		if (tick == 10 || tick == -1) {
+		if (tick == 20 || tick == -1) {
 			if (!(Count < arrPawn.GetCount() - 1)) {
 				scroll.SetScrollPos(Count); 
 				Sleep(1000);
@@ -202,15 +202,12 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 				flag = -1;
 			else
 				flag = 0;
-			SetVelocity(pos, arrPawn[++Count].getPos());
+			SetVelocity(arrPawn[++Count-1].getPos(), arrPawn[Count].getPos());
 			scroll.SetScrollPos(Count-1);
 			tick = 0;
 		}
-		// 야매 보정
 		posF[0] += velocity[0];
 		posF[1] += velocity[1];
-		pos.x = posF[0];
-		pos.y = posF[1];
 		tick++;
 		Invalidate();
 	}
@@ -295,9 +292,8 @@ void CChildView::Play()
 	played = true;
 	Count = 0;
 	scroll.SetScrollPos(Count);
-	pos = arrPawn[0].getPos();
-	posF[0] = pos.x;
-	posF[1] = pos.y;
+	posF[0] = arrPawn[0].getPos().x;
+	posF[1] = arrPawn[0].getPos().y;
 	tick = -1;
 	button[3].SetState(true);
 	Invalidate();
@@ -313,8 +309,8 @@ void CChildView::EndPlay()
 
 void CChildView::SetVelocity(const CPoint& start,const  CPoint& target)
 {
-	velocity[0] = (target.x - start.x) / 10.0f;
-	velocity[1] = (target.y - start.y) / 10.0f;
+	velocity[0] = (target.x - start.x) / 20.0f;
+	velocity[1] = (target.y - start.y) / 20.0f;
 }
 
 BOOL CChildView::OnEraseBkgnd(CDC* pDC)
