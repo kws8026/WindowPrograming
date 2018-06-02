@@ -149,6 +149,7 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		button[i].Create(str[i], BS_PUSHBUTTON | WS_VISIBLE, CRect(i * 50, 0, (i * 50) + 50, 30), this, 131 + i);
 	}
 	scroll.Create(SBS_HORZ | WS_VISIBLE, CRect(250, 0, 800, 30), this, 136);
+	scroll.EnableScrollBar(ESB_ENABLE_BOTH);
 	SetTimer(0, 50, NULL);
 	// TODO:  여기에 특수화된 작성 코드를 추가합니다.
 	
@@ -218,7 +219,7 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 void CChildView::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	if (nSBCode != NULL && played == false)
+	if (pScrollBar != NULL && played == false)
 	{
 		switch (nSBCode)
 		{
