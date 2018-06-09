@@ -87,19 +87,19 @@ void CChildView::OnPaint()
 		memDC.SelectObject(&pen);
 		CPoint tempP(posF[0], posF[1]);
 		if(flag == -1){
-		CPoint p[8];
-		p[0] = { tempP.x - 20 + tick / 4, tempP.y - 20 + tick / 4 };
-		p[1] = { tempP.x, tempP.y - 20 }; // 위
-		p[2] = { tempP.x + 20 - tick / 4, tempP.y - 20 + tick / 4 };
-		p[3] = { tempP.x + 20, tempP.y }; // 오른
-		p[4] = { tempP.x + 20 - tick / 4, tempP.y + 20 - tick / 4 };
-		p[5] = { tempP.x , tempP.y + 20 }; // 아래
-		p[6] = { tempP.x - 20 + tick / 4, tempP.y + 20 - tick / 4 };
-		p[7] = { tempP.x - 20, tempP.y}; // 왼
-		if (tick < 10)
-			memDC.Polygon(p,8);
-		else 
-			memDC.Ellipse(tempP.x - 20, tempP.y - 20, tempP.x + 20, tempP.y + 20);
+			CPoint p[8];
+			p[0] = { tempP.x - 20 + tick / 4, tempP.y - 20 + tick / 4 };
+			p[1] = { tempP.x, tempP.y - 20 }; // 위
+			p[2] = { tempP.x + 20 - tick / 4, tempP.y - 20 + tick / 4 };
+			p[3] = { tempP.x + 20, tempP.y }; // 오른
+			p[4] = { tempP.x + 20 - tick / 4, tempP.y + 20 - tick / 4 };
+			p[5] = { tempP.x , tempP.y + 20 }; // 아래
+			p[6] = { tempP.x - 20 + tick / 4, tempP.y + 20 - tick / 4 };
+			p[7] = { tempP.x - 20, tempP.y}; // 왼
+			if (tick < 20)
+				memDC.Polygon(p,8);
+			else 
+				memDC.Ellipse(tempP.x - 20, tempP.y - 20, tempP.x + 20, tempP.y + 20);
 		}
 		else if (flag == 1) {
 			CPoint p[8];
