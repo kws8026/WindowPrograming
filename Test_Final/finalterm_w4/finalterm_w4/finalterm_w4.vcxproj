@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5DA3BAD7-5551-4080-815C-76E037818D6E}</ProjectGuid>
-    <RootNamespace>finalterm_w2</RootNamespace>
+    <ProjectGuid>{F5FE03FD-661A-4A6E-8BC2-6ED0B9170266}</ProjectGuid>
+    <RootNamespace>finalterm_w4</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <Keyword>MFCProj</Keyword>
   </PropertyGroup>
@@ -182,7 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChildView.h" />
-    <ClInclude Include="finalterm_w2.h" />
+    <ClInclude Include="finalterm_w4.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -190,7 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChildView.cpp" />
-    <ClCompile Include="finalterm_w2.cpp" />
+    <ClCompile Include="finalterm_w4.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -200,13 +200,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="finalterm_w2.rc" />
+    <ResourceCompile Include="finalterm_w4.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\finalterm_w2.rc2" />
+    <None Include="res\finalterm_w4.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\finalterm_w2.ico" />
+    <Image Include="res\finalterm_w4.ico" />
     <Image Include="res\Toolbar.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
@@ -214,7 +214,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties RESOURCE_FILE="finalterm_w2.rc" />
+      <UserProperties RESOURCE_FILE="finalterm_w4.rc" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

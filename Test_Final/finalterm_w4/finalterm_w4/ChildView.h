@@ -16,10 +16,10 @@ public:
 
 // 특성입니다.
 public:
-	CArray<CPoint, CPoint> posArr;
+
 // 작업입니다.
 public:
-
+	CButton Radio[2];
 // 재정의입니다.
 	protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
@@ -33,9 +33,7 @@ protected:
 	afx_msg void OnPaint();
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnSave();
-	afx_msg void OnNew();
-	afx_msg void OnLoad();
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnClicked();
 };
 

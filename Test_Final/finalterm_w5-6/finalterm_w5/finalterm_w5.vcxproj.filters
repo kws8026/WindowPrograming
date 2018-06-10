@@ -18,7 +18,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="finalterm_w2.h">
+    <ClInclude Include="finalterm_w5.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
@@ -36,9 +36,12 @@
     <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="MyDialog.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="finalterm_w2.cpp">
+    <ClCompile Include="finalterm_w5.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
@@ -50,19 +53,22 @@
     <ClCompile Include="ChildView.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="MyDialog.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="finalterm_w2.rc">
+    <ResourceCompile Include="finalterm_w5.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\finalterm_w2.rc2">
+    <None Include="res\finalterm_w5.rc2">
       <Filter>리소스 파일</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\finalterm_w2.ico">
+    <Image Include="res\finalterm_w5.ico">
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="res\Toolbar.bmp">
