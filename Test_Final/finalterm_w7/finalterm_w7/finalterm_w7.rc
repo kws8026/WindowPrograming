@@ -52,7 +52,7 @@ BEGIN
     "\r\n"
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)\r\n"
     "LANGUAGE 18, 1\r\n"
-    "#include ""res\\finalterm_w5.rc2""  // Microsoft Visual C++ 이외의 다른 도구에서 편집한 리소스입니다.\r\n"
+    "#include ""res\\finalterm_w7.rc2""  // Microsoft Visual C++ 이외의 다른 도구에서 편집한 리소스입니다.\r\n"
     "#include ""l.KOR\\afxres.rc""      // 표준 구성 요소\r\n"
     "#endif\r\n"
     "\0"
@@ -68,7 +68,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "res\\finalterm_w5.ico"
+IDR_MAINFRAME           ICON                    "res\\finalterm_w7.ico"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -120,7 +120,7 @@ BEGIN
     END
     POPUP "도움말(&H)"
     BEGIN
-        MENUITEM "finalterm_w5 정보(&A)...",      ID_APP_ABOUT
+        MENUITEM "finalterm_w7 정보(&A)...",      ID_APP_ABOUT
     END
 END
 
@@ -152,29 +152,37 @@ END
 
 IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "finalterm_w5 정보"
+CAPTION "finalterm_w7 정보"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
-    LTEXT           "finalterm_w5, 버전 1.0",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "finalterm_w7, 버전 1.0",IDC_STATIC,42,14,114,8,SS_NOPREFIX
     LTEXT           "Copyright (C) 2018",IDC_STATIC,42,26,114,8
     DEFPUSHBUTTON   "확인",IDOK,113,41,50,14,WS_GROUP
 END
 
-IDD_DIALOG1 DIALOGEX 0, 0, 255, 165
+IDD_DIALOG1 DIALOGEX 0, 0, 201, 136
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Dialog"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "확인",IDOK,198,19,50,14
-    PUSHBUTTON      "취소",IDCANCEL,198,45,50,14
-    EDITTEXT        IDC_EDIT1,17,18,140,130,ES_MULTILINE | ES_AUTOHSCROLL | ES_WANTRETURN
-    LTEXT           "R",IDC_STATIC,186,81,8,8
-    EDITTEXT        IDC_EDIT2,198,78,40,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT3,198,97,40,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT4,198,117,40,14,ES_AUTOHSCROLL
-    LTEXT           "G",IDC_STATIC,185,99,8,8
-    LTEXT           "B",IDC_STATIC,186,119,8,8
+    PUSHBUTTON      "1",IDC_1,15,15,50,14
+    PUSHBUTTON      "4",IDC_4,15,33,50,14
+    PUSHBUTTON      "7",IDC_7,15,51,50,14
+    PUSHBUTTON      "8",IDC_8,73,51,50,14
+    PUSHBUTTON      "5",IDC_5,73,34,50,14
+    PUSHBUTTON      "2",IDC_2,73,15,50,14
+    PUSHBUTTON      "3",IDC_3,129,15,50,14
+    PUSHBUTTON      "6",IDC_6,130,34,50,14
+    PUSHBUTTON      "9",IDC_9,130,51,50,14
+    PUSHBUTTON      "+",IDC_PLUS,73,90,50,14
+    PUSHBUTTON      "-",IDC_MINUS,15,109,50,14
+    PUSHBUTTON      "X",IDC_MLTIP,73,108,50,14
+    PUSHBUTTON      "Clear",IDC_CLEAR,130,70,50,14
+    PUSHBUTTON      "=",IDC_END,130,89,50,14
+    PUSHBUTTON      "/",IDC_DIVIDE,15,90,50,14
+    PUSHBUTTON      "0",IDC_0,73,70,50,14
+    PUSHBUTTON      "<-",IDC_BACKSPACE,15,71,50,14
 END
 
 
@@ -201,11 +209,11 @@ BEGIN
         BLOCK "041204B0"
         BEGIN
             VALUE "CompanyName", "TODO: <회사 이름>"
-            VALUE "FileDescription", "finalterm_w5"
+            VALUE "FileDescription", "finalterm_w7"
             VALUE "FileVersion", "1.0.0.1"
-            VALUE "InternalName", "finalterm_w5.exe"
+            VALUE "InternalName", "finalterm_w7.exe"
             VALUE "LegalCopyright", "TODO: (c) <회사 이름>.  All rights reserved."
-            VALUE "OriginalFilename", "finalterm_w5.exe"
+            VALUE "OriginalFilename", "finalterm_w7.exe"
             VALUE "ProductName", "TODO: <제품 이름>"
             VALUE "ProductVersion", "1.0.0.1"
         END
@@ -236,9 +244,9 @@ BEGIN
     IDD_DIALOG1, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 248
+        RIGHTMARGIN, 194
         TOPMARGIN, 7
-        BOTTOMMARGIN, 158
+        BOTTOMMARGIN, 129
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -262,12 +270,12 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "finalterm_w5"
+    IDR_MAINFRAME           "finalterm_w7"
 END
 
 STRINGTABLE
 BEGIN
-    AFX_IDS_APP_TITLE       "finalterm_w5"
+    AFX_IDS_APP_TITLE       "finalterm_w7"
     AFX_IDS_IDLEMESSAGE     "준비"
 END
 
@@ -352,7 +360,7 @@ END
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)
 LANGUAGE 18, 1
-#include "res\finalterm_w5.rc2"  // Microsoft Visual C++ 이외의 다른 도구에서 편집한 리소스입니다.
+#include "res\finalterm_w7.rc2"  // Microsoft Visual C++ 이외의 다른 도구에서 편집한 리소스입니다.
 #include "l.KOR\afxres.rc"      // 표준 구성 요소
 #endif
 

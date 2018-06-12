@@ -4,7 +4,7 @@
 
 // MyDialog 대화 상자입니다.
 
-class MyDialog : public CDialog
+class MyDialog : public CDialogEx
 {
 	DECLARE_DYNAMIC(MyDialog)
 
@@ -22,16 +22,15 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CEdit TextBox;
-	CEdit ColorBox[3];
-	int color[3];
-	CString str;
-	void MecroColor(COLORREF sourse) 
-	{ 
-		color[0] = GetRValue(sourse);
-		color[1] = GetGValue(sourse);
-		color[2] = GetBValue(sourse);
-	}
-	virtual void OnOK();
-	virtual BOOL OnInitDialog();
+	CButton Number[10];
+	class CChildView* viewptr;
+	CString* strptr;
+	afx_msg void OnBnClickedPlus();
+	afx_msg void OnBnClickedMinus();
+	afx_msg void OnBnClickedMltip();
+	afx_msg void OnBnClickedDivide();
+	afx_msg void OnBnClickedEND();
+	afx_msg void OnBnClickedCLEAR();
+	afx_msg void OnBnClickedBackspace();
+	afx_msg void OnBnClickedNumber(UINT id);
 };

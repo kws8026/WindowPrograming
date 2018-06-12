@@ -16,8 +16,8 @@ public:
 
 // 특성입니다.
 public:
+	class MyDialog* dlgptr;
 	CString str;
-	COLORREF color;
 // 작업입니다.
 public:
 
@@ -34,6 +34,6 @@ protected:
 	afx_msg void OnPaint();
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 };
 

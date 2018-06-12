@@ -3,9 +3,10 @@
 //
 
 #include "stdafx.h"
-#include "finalterm_w5.h"
+#include "finalterm_w7.h"
 #include "ChildView.h"
 #include "MyDialog.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -13,7 +14,7 @@
 
 // CChildView
 
-CChildView::CChildView(): color(RGB(0,0,0))
+CChildView::CChildView()
 {
 }
 
@@ -24,7 +25,7 @@ CChildView::~CChildView()
 
 BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_PAINT()
-	ON_WM_LBUTTONDOWN()
+	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
 
@@ -51,27 +52,23 @@ void CChildView::OnPaint()
 	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
 	CRect rect;
 	GetClientRect(rect);
-	int tap = 0;
-	for (int i = 0; i < str.GetLength(); i++)
-		if (str[i] == '\n')
-			tap += 8;
-	CRect temp(0, (rect.Height() / 2) - 8- tap, rect.Width(), (rect.Height() / 2) + 8+ tap);
-	dc.SetTextColor(color);
-	dc.DrawText(str, temp, DT_CENTER);
+	dc.DrawText(str, rect, DT_LEFT | DT_TOP);
+
 	// 그리기 메시지에 대해서는 CWnd::OnPaint()를 호출하지 마십시오.
 }
 
 
 
-void CChildView::OnLButtonDown(UINT nFlags, CPoint point)
+int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	MyDialog dlg;
-	dlg.str = str;
-	dlg.MecroColor(color);
-	dlg.DoModal();
-	str = dlg.str;
-	color = RGB(dlg.color[0], dlg.color[1], dlg.color[2]);
-	Invalidate();
-	CWnd::OnLButtonDown(nFlags, point);
+	if (CWnd::OnCreate(lpCreateStruct) == -1)
+		return -1;
+	dlgptr = new MyDialog();
+	dlgptr->viewptr = this;
+	dlgptr->strptr = &str;
+	dlgptr->Create(IDD_DIALOG1);
+	dlgptr->ShowWindow(SW_SHOW);
+	// TODO:  여기에 특수화된 작성 코드를 추가합니다.
+
+	return 0;
 }
